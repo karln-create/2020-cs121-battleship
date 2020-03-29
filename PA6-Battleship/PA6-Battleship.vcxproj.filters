@@ -18,10 +18,26 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="board-functions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game-board.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mainheader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="battleship.log">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
