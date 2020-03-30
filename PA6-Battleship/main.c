@@ -3,21 +3,23 @@
 	DESCRIPTION: BUILD A BATTLESHIP GAME IN C.
 				Refer to README.md for more information and complete program development.
 */
-
 #include "mainheader.h"
 
-// declares and initializes global arrays. Can be used anywhere.
-int g_label[1][22] = { 0 };
-char g_gameboard[10][21] = { '\0' };
+// declares and intializes global arrays.
+int g_label[1][22] = { 0 }, g_gameboard[10][21] = { 0 };
+
 
 int main(void)
 {
+	// sets the seed for the randomizer.
+	srand((unsigned int)time(NULL));
 
-	// sets values for the array _label[][].
-	set_arrays(g_label, g_gameboard);
+	// sets preparatory values for the gameboard arrays.
+	prep_set_arrays(/*g_label, g_gameboard*/);
 
 	// calls function to print out the gameboard.
-	print_gameboard(g_label, g_gameboard);
+	print_gameboard(/*g_label, g_gameboard*/);
 
 	return 0;
 }
+

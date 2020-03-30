@@ -100,3 +100,14 @@
 			In other words, the actual gameboard structure consist of an <int> array for label and a <char> for the playable gameboard.
 			
 		TO-DO: Implement the ship placement function for P1.
+
+	UPDATE 2020-03-29-SUN-0948:
+		SUMMARY: I decided to keep using for now the integer arrays for the gameboard and stream ascii code into the arrays, because
+			it seems to be working fine.
+			
+		(*)	Will come back later to try again to merge both arrays into one single gameboard.
+
+		TO-DO: Implement the ship placement randomizer for P1.
+			Need: reliable rand function. Last implementation in PA5 was incredibly unreliable, i.e. it tends to bias towards
+			multiple-of-a-kind, which sort of takes the fun out of playing.
+

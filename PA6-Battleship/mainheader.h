@@ -2,16 +2,24 @@
 #define MAINHEADER_H
 #define _CRT_SECURE_NO_WARNING
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
-// DO ONLY ONCE. Set values for the gameboard.
-void set_arrays(int _label[][22], char gameboard[][21]);
+// GLOBAL ARRAYS -----------------------------------------------------------------------------------------------------------
+// are shared across all files in the program.
+extern int g_label[1][22], g_gameboard[10][21];
 
-// PRINT the gameboard on-demand.
-void print_gameboard(int _label[][22], char gameboard[][21]);
+// PREPARES THE GAMEBOARD --------------------------------------------------------------------------------------------------
+// is used only ONCE.
+void prep_set_arrays();
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// PRINTS THE GAMEBOARD ON-DEMAND.
+void print_gameboard();
 
 // EXECUTES COREGAME.
-void core_game(char gameboard[][21]);
+void core_game();
 
 
 
