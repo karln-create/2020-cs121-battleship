@@ -135,4 +135,7 @@
 		a warning flag if the player enter any coordinates that fit in this group.
 
 		TO-DO: Create a randomizer for ship placement for P2.
-
+	
+	UPDATE 2020-04-02-THU-1951:
+		Stuck at creating an algorithm to randomize with exclusiion. For example, once a number is selected, it needs to be removed
+		from the pool of number to randomize.

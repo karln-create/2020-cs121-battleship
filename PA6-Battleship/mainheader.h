@@ -23,13 +23,18 @@ void print_gameboard();
 void core_game();
 
 // UPDATE THE GAMEBOARD.
-void update_gameboard(char board[10][10]);
+void update_gameboard(char board[][10]);
+
+// DEBUGGER: UPDATE BOARD FOR P2. TO BE DELETED ONCE DONE.
+void update_gameboard_P2(char board[][10]);
 
 // DEFINE THE struct ship{} Ship.
 typedef struct ship {
 	char type;
 	int length;
-
+	int row;
+	int column;
+	char orientation;
 } Ship;
 
 #endif

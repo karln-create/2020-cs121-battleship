@@ -41,10 +41,6 @@ void print_gameboard()
 	}
 }
 
-void select_who_starts_first(int* player_turn)
-{
-	*player_turn = rand() % 2 + 1;
-}
 
 void core_game()
 {
@@ -54,52 +50,64 @@ void core_game()
 	initialize_board(P1_board);
 	initialize_board(P2_board);
 
-	Ship Carrier = { 'C', 5 };
+	Ship Carrier	= { 'C', 5 };
 	Ship Battleship = { 'B', 4 };
-	Ship Cruiser = {'R', 3};
-	Ship Submarine = {'S', 3};
-	Ship Destroyer = {'D', 2};
+	Ship Cruiser	= { 'R', 3 };
+	Ship Submarine	= { 'S', 3 };
+	Ship Destroyer	= { 'D', 2 };
 
 	int player_turn;
 	// If player_turn == 1 ---> turn: P1. If player_turn == 2 ---> turn: P2.
-	select_who_starts_first(&player_turn);
+	flipcoin(&player_turn);
 
 	// Sets location for Carrier.
 	printf("\n\tCarrier: ");
-	manually_place_ship_on_board(P1_board, Carrier.type, &Carrier.length);
+	manually_place_ship_on_board(P1_board, &Carrier);
 	update_gameboard(P1_board);
 	print_gameboard();
 
 	printf("\n\tBattleship: ");
-	manually_place_ship_on_board(P1_board, Battleship.type, &Battleship.length);
+	manually_place_ship_on_board(P1_board, &Battleship);
 	update_gameboard(P1_board);
 	print_gameboard();
 
 	printf("\n\tCruiser: ");
-	manually_place_ship_on_board(P1_board, Cruiser.type, &Cruiser.length);
+	manually_place_ship_on_board(P1_board, &Cruiser);
 	update_gameboard(P1_board);
 	print_gameboard();
 
 	printf("\n\tSubmarine: ");
-	manually_place_ship_on_board(P1_board, Submarine.type, &Submarine.length);
+	manually_place_ship_on_board(P1_board, &Submarine);
 	update_gameboard(P1_board);
 	print_gameboard();
 
 	printf("\n\tDestroyer: ");
-	manually_place_ship_on_board(P1_board, Destroyer.type, &Destroyer.length);
+	manually_place_ship_on_board(P1_board, &Destroyer);
 	update_gameboard(P1_board);
 	print_gameboard();
 
 
+
 }
 
-void update_gameboard(char board[10][10])
+void update_gameboard(char board[][10])
 {
 	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
 			g_gameboard[i][j] = board[i][j];
+		}
+	}
+}
+
+void update_gameboard_P2(char board[][10])
+{
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			g_gameboard[i][11 + j] = board[i][j];
 		}
 	}
 }
