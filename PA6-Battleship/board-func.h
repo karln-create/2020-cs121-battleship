@@ -14,7 +14,7 @@ void manually_place_ship_on_board(char board[][10], struct ship* a_ship);
 void coordinate_randomizer(int* num);
 
 // RANDOMLY SHIP PLACEMENTS FOR P2.
-void randomly_place_ship_on_board(char board[][10], char ship_type, int ship_length);
+void randomly_place_ship_on_board(char board[][10], struct ship* a_ship);
 
 // PLACE THE SHIP HORIZONTALLY.
 char place_ship_horizontally(char board[][10], struct ship* a_ship, int* flag);

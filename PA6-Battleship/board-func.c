@@ -64,19 +64,38 @@ void coordinate_randomizer(int* num)
 }
 
 
-//void randomly_place_ship_on_board(char board[][10], char ship_type, int ship_length)
-//{
-//	int row = -1, column = -1, flip = -1;
-//	//char orientation = '\0';
-//
-//	while (flip == -1)
-//	{
-//		flipcoin(&flip);
-//		if (flip == 1)
-//
-//	}
-//
-//}
+void randomly_place_ship_on_board(char board[][10], struct ship* a_ship)
+{
+	int i = 0, flip = -1, flag = 1;
+	a_ship->orientation = '\0';
+	while (flag == 1)
+	{
+		if (a_ship->row > 10 || a_ship->row < 0 || a_ship->column > 10 || a_ship->column < 0)
+		{
+			coordinate_randomizer(&a_ship->row);
+			coordinate_randomizer(&a_ship->column);
+		}
+		else
+		{
+			flag = 0;
+			while (a_ship->orientation == '\0')
+			{
+				flipcoin(&flip);
+				if (flip == 0)
+				{
+					a_ship->orientation = 'h';
+					place_ship_horizontally(board, a_ship, &flag);
+				}
+				else if (flip == 1)
+				{
+					a_ship->orientation = 'v';
+					place_ship_vertically(board, a_ship, &flag);
+				}
+			}
+		}
+	}
+
+}
 
 
 char place_ship_horizontally(char board[][10], struct ship* a_ship, int* flag)

@@ -139,3 +139,7 @@
 	UPDATE 2020-04-02-THU-1951:
 		Stuck at creating an algorithm to randomize with exclusiion. For example, once a number is selected, it needs to be removed
 		from the pool of number to randomize.
+
+	UPDATE 2020-04-02-THU-2307:
+		I need to modify the horizontal and vertical ship placement functions to accomodate the randomizer.
+		As they are right now, everytime they are called the program runs into an infinite loop.

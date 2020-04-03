@@ -86,8 +86,13 @@ void core_game()
 	update_gameboard(P1_board);
 	print_gameboard();
 
-
-
+	randomly_place_ship_on_board(P2_board, &Carrier);
+	randomly_place_ship_on_board(P2_board, &Battleship);
+	randomly_place_ship_on_board(P2_board, &Cruiser);
+	randomly_place_ship_on_board(P2_board, &Submarine);
+	randomly_place_ship_on_board(P2_board, &Destroyer);
+	update_gameboard_P2(P2_board);
+	print_gameboard();
 }
 
 void update_gameboard(char board[][10])
