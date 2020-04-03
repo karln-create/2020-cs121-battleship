@@ -18,15 +18,18 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="board-functions.c">
+    <ClCompile Include="game.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game-board.c">
+    <ClCompile Include="board-func.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mainheader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="board-func.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

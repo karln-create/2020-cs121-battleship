@@ -111,3 +111,28 @@
 			Need: reliable rand function. Last implementation in PA5 was incredibly unreliable, i.e. it tends to bias towards
 			multiple-of-a-kind, which sort of takes the fun out of playing.
 
+	UPDATE 2020-04-02-THU-1215:
+		I have changed the global arrays back to <char> type. After reading and thinking more about type, I remembered that char type has a
+		much smaller memory footprint (1 byte per char vs. 4 bytes per integer). On the other hand, there is virtually no difference in
+		implementation of the arrays.
+
+		TO-DO: start work on the core-game:
+			1. Coinflip to determine which player goes first.
+			2.	a. Create the manual ship placement algorithm.
+				b. Create the random ship placement algorithm.
+			3. Create the algorithm to update the player board.
+
+	UPDATE 2020-04-02-THU-1350:
+		Completed implementation for the first ship placement (the Carrier) for either orientations (horizontal or vertical).
+		TO-DOL: Create condition to check if the next ship length might collide with the previousply placed ship.
+
+	UPDATE 2020-04-02-THU-1900: Implemented manual ship placement.
+		I had some difficulties implementing this part because I was setting too many conditions making the program unnecessarily convoluted.
+		For example, I was trying to 'help' out the player. If the player placed a ship too close to the border, I would flip the ship
+		and place it in the opposite direction. This created unwanted behaviors that I could not figure out how to solve.
+
+		In the end, I decided to simplify the conditions by grouping all collision and out-of-bound coordinates together. The program throws
+		a warning flag if the player enter any coordinates that fit in this group.
+
+		TO-DO: Create a randomizer for ship placement for P2.
+

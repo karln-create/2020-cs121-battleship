@@ -1,31 +1,35 @@
 #ifndef MAINHEADER_H
 #define MAINHEADER_H
-#define _CRT_SECURE_NO_WARNING
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "board-func.h"
 
 // GLOBAL ARRAYS -----------------------------------------------------------------------------------------------------------
 // are shared across all files in the program.
-extern int g_label[1][22], g_gameboard[10][21];
+extern char g_label[1][22], g_gameboard[10][21];
 
-// PREPARES THE GAMEBOARD --------------------------------------------------------------------------------------------------
-// is used only ONCE.
+// RESETS THE GAMEBOARD --------------------------------------------------------------------------------------------------
+// for a new game.
 void prep_set_arrays();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// PRINTS THE GAMEBOARD ON-DEMAND.
+// PRINTS THE GAMEBOARD.
 void print_gameboard();
 
 // EXECUTES COREGAME.
 void core_game();
 
+// UPDATE THE GAMEBOARD.
+void update_gameboard(char board[10][10]);
 
+// DEFINE THE struct ship{} Ship.
+typedef struct ship {
+	char type;
+	int length;
 
-
-
-
-
+} Ship;
 
 #endif

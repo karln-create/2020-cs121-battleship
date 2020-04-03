@@ -138,11 +138,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="board-functions.c" />
-    <ClCompile Include="game-board.c" />
+    <ClCompile Include="board-func.c" />
+    <ClCompile Include="game.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="board-func.h" />
     <ClInclude Include="mainheader.h" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
 #include "mainheader.h"
 
 // declares and intializes global arrays.
-int g_label[1][22] = { 0 }, g_gameboard[10][21] = { 0 };
+char g_label[1][22] = { 0 }, g_gameboard[10][21] = { 0 };
 
 
 int main(void)
@@ -18,6 +18,10 @@ int main(void)
 	prep_set_arrays(/*g_label, g_gameboard*/);
 
 	// calls function to print out the gameboard.
+	print_gameboard(/*g_label, g_gameboard*/);
+
+	core_game();
+
 	print_gameboard(/*g_label, g_gameboard*/);
 
 	return 0;
