@@ -3,9 +3,9 @@
 	DESCRIPTION: BUILD A BATTLESHIP GAME IN C.
 				Refer to README.md for more information and complete program development.
 */
-#include "mainheader.h"
+#include "main.h"
 
-// declares and intializes global arrays.
+// declares and intializes global arrays for the displayed gameboard.
 char g_label[1][22] = { 0 }, g_gameboard[10][21] = { 0 };
 
 

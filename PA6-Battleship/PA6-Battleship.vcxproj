@@ -138,13 +138,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="board-func.c" />
+    <ClCompile Include="pregame.c" />
     <ClCompile Include="game.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="board-func.h" />
-    <ClInclude Include="mainheader.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="pregame.h" />
+    <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

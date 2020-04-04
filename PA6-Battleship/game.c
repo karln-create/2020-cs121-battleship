@@ -1,4 +1,4 @@
-#include "mainheader.h"
+#include "main.h"
 
 void prep_set_arrays()
 {
@@ -41,58 +41,68 @@ void print_gameboard()
 	}
 }
 
-
 void core_game()
 {
-	// declares and intializes one array board for each player.
-	char P1_board[10][10] = { 0 }, P2_board[10][10] = { 0 };
+	// ship type: type, orientation, length, row, col
+	Ship Carrier	= { "", 'C', '\0', 5, 0, 0 };
+	Ship Battleship = { "", 'B', '\0', 4, 0, 0 };
+	Ship Cruiser	= { "", 'R', '\0', 3, 0, 0 };
+	Ship Submarine	= { "", 'S', '\0', 3, 0, 0 };
+	Ship Destroyer	= { "", 'D', '\0', 2, 0, 0 };
 
+	// In the beginning both players have the same fleet, unplaced and undamaged.
+	// Therefore, initialize both arrays as such.
+	Ship P1_Fleet[5] = { Carrier, Battleship, Cruiser, Submarine, Destroyer },
+		 P2_Fleet[5] = { Carrier, Battleship, Cruiser, Submarine, Destroyer };
+
+	// Declare and intialize one array board for each player.
+	char P1_board[10][10] = { 0 },
+		 P2_board[10][10] = { 0 };
 	initialize_board(P1_board);
 	initialize_board(P2_board);
 
-	Ship Carrier	= { 'C', 5 };
-	Ship Battleship = { 'B', 4 };
-	Ship Cruiser	= { 'R', 3 };
-	Ship Submarine	= { 'S', 3 };
-	Ship Destroyer	= { 'D', 2 };
+	// Call function to set up the gameboard.
+	pre_game(P1_Fleet, P2_Fleet, P1_board, P2_board);
 
-	int player_turn;
-	// If player_turn == 1 ---> turn: P1. If player_turn == 2 ---> turn: P2.
-	flipcoin(&player_turn);
+	// Flip a coin to determine which player goes first.
+	int coin = flipcoin();
+	// IF coin == 0 THEN turn: P1.
+	// IF coin == 1 THEN turn: P2.
 
-	// Sets location for Carrier.
-	printf("\n\tCarrier: ");
-	manually_place_ship_on_board(P1_board, &Carrier);
-	update_gameboard(P1_board);
-	print_gameboard();
+}
 
-	printf("\n\tBattleship: ");
-	manually_place_ship_on_board(P1_board, &Battleship);
-	update_gameboard(P1_board);
-	print_gameboard();
+void pre_game(struct ship P1_Fleet[], struct ship P2_Fleet[],
+										char P1_board[][10], char P2_board[][10])
+{
+	char ship_name[5][11] = { "Carrier",
+							 "Battleship",
+							 "Cruiser",
+							 "Submarine",
+							 "Destroyer" };
 
-	printf("\n\tCruiser: ");
-	manually_place_ship_on_board(P1_board, &Cruiser);
-	update_gameboard(P1_board);
-	print_gameboard();
+	// Ship placements for P1.
+	for (int i = 0; i < 5; ++i)
+	{
+		strcpy(P1_Fleet[i].alias, ship_name[i]);
+		printf("\n\t%s", P1_Fleet[i].alias);
+		manually_place_ship_on_board(P1_board, &P1_Fleet[i]);
+		update_gameboard(P1_board);
+		print_gameboard();
+	}
 
-	printf("\n\tSubmarine: ");
-	manually_place_ship_on_board(P1_board, &Submarine);
-	update_gameboard(P1_board);
-	print_gameboard();
+	// ship placements for P2.
+	/*for (int i = 0; i < 5; ++i)
+	{
+		*P2_Fleet[i].alias = *ship_name[i];
+		randomly_place_ship_on_board(P2_board, &P2_Fleet[0]);
+		update_gameboard_P2(P2_board);
+		print_gameboard();
+	}*/
+}
 
-	printf("\n\tDestroyer: ");
-	manually_place_ship_on_board(P1_board, &Destroyer);
-	update_gameboard(P1_board);
-	print_gameboard();
+void post_game()
+{
 
-	randomly_place_ship_on_board(P2_board, &Carrier);
-	randomly_place_ship_on_board(P2_board, &Battleship);
-	randomly_place_ship_on_board(P2_board, &Cruiser);
-	randomly_place_ship_on_board(P2_board, &Submarine);
-	randomly_place_ship_on_board(P2_board, &Destroyer);
-	update_gameboard_P2(P2_board);
-	print_gameboard();
 }
 
 void update_gameboard(char board[][10])

@@ -142,4 +142,17 @@
 
 	UPDATE 2020-04-02-THU-2307:
 		I need to modify the horizontal and vertical ship placement functions to accomodate the randomizer.
-		As they are right now, everytime they are called the program runs into an infinite loop.
+		As they are right now, the program often runs into an infinite loop when these two functions are called.
+
+	UPDATE 2020-04-04-SAT-1150: Program restructure.
+		I decided to separate the program into smaller chunks:
+			- pregame
+			- game
+			- postgame
+
+		By restructuring the program this way, it is easier to manage the functions and modify if the need arise.
+
+	UPDATE 2020-04-04-SAT-1320: I have trimmed down the code, especially in gam.c.
+		I put all the repetitive function calls into a for loop to assign values to all the specific ship's parameters.
+
+		TO-DO: Rework the collision check functions.
