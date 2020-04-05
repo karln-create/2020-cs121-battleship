@@ -75,29 +75,31 @@ void pre_game(struct ship P1_Fleet[], struct ship P2_Fleet[],
 										char P1_board[][10], char P2_board[][10])
 {
 	char ship_name[5][11] = { "Carrier",
-							 "Battleship",
-							 "Cruiser",
-							 "Submarine",
-							 "Destroyer" };
+							  "Battleship",
+							  "Cruiser",
+							  "Submarine",
+							  "Destroyer" };
 
 	// Ship placements for P1.
-	for (int i = 0; i < 5; ++i)
-	{
-		strcpy(P1_Fleet[i].alias, ship_name[i]);
-		printf("\n\t%s", P1_Fleet[i].alias);
-		manually_place_ship_on_board(P1_board, &P1_Fleet[i]);
-		update_gameboard(P1_board);
-		print_gameboard();
-	}
+	//for (int i = 0; i < 5; ++i)
+	//{
+	//	strcpy(P1_Fleet[i].alias, ship_name[i]);
+	//	printf("\n%s:\n", P1_Fleet[i].alias);
+	//	manually_place_ship_on_board(P1_board, &P1_Fleet[i]);
+	//	update_gameboard(P1_board);
+	//	print_gameboard();
+	//	//print_board(P1_board);
+	//}
 
 	// ship placements for P2.
-	/*for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		*P2_Fleet[i].alias = *ship_name[i];
-		randomly_place_ship_on_board(P2_board, &P2_Fleet[0]);
+		randomly_place_ship_on_board(P2_board, &P2_Fleet[i]);
 		update_gameboard_P2(P2_board);
 		print_gameboard();
-	}*/
+		print_board(P2_board);
+	}
 }
 
 void post_game()
@@ -124,5 +126,16 @@ void update_gameboard_P2(char board[][10])
 		{
 			g_gameboard[i][11 + j] = board[i][j];
 		}
+	}
+}
+
+void print_board(char board[][10])
+{
+	printf("\n");
+	for (int i = 0; i < 10; ++i)
+	{
+		for (int j = 0; j < 10; ++j)
+			printf(" %c ", board[i][j]);
+		printf("\n");
 	}
 }

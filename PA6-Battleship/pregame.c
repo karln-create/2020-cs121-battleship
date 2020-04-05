@@ -20,39 +20,58 @@ int flipcoin(void)
 
 void manually_place_ship_on_board(char board[][10], struct ship* a_ship)
 {
-	int i = 0, flag = 1;
+	int i = 0, r = -1, c = -1, flag = -1;
 	a_ship->orientation = '\0';
 
-	while (flag == 1)
+	while (flag != 0)
 	{
-		// Asks P1 to enter integer coordinates: (row = i, col = j).
-		printf("Please enter a coordinate [row][col]: ");
-		scanf(" %d %d", &a_ship->row, &a_ship->col);
+		// Ask P1 to enter integer coordinates: (row = i, col = j).
+		printf("\tPlease select an available coordinate [row][col]: ");
+		scanf(" %d %d", &r, &c);
+		// Store coordinate in the ship's profile.
+		a_ship->row = r - 1;
+		a_ship->col = c - 1;
 		flag = 0;
-		if (a_ship->row > 10 || a_ship->row < 0 || a_ship->col > 10 || a_ship->col < 0)
+		// If inputs are out-of-bound, raise flag.
+		if (r < 1 || r > 10 || c < 1 || c > 10)
 		{
-			printf("\tINVALID. Coordinate is outside the board.\n");
+			printf("\n\tINVALID input.\n\tCoordinate is outside the gameboard.\n");
 			flag = 1;
 		}
 
-		// Asks P1 to choose an orientiation, vertical or horizontal for the ship placement.
+		// If conditions satisfied, lower flag.
 		else if (flag == 0)
 		{
+			// Asks P1 to choose an orientiation, vertical or horizontal for the ship placement.
 			while (a_ship->orientation == '\0')
 			{
-				printf("Do you want to place the ship vertically or horizontally? (h/v) ");
+				printf("Place the ship vertically or horizontally (h/v): ");
 				scanf(" %c", &a_ship->orientation);
 				if (a_ship->orientation == 'h' || a_ship->orientation == 'H')
 				{
-					place_ship_HORZ(board, a_ship, &flag);
+					flag = collision_chk_HORZ(board, a_ship);
+					if (flag == 1)
+					{
+						printf("\tCOLLISION WARNING. Location unavailable. Pick a different coordinate.\n");
+						break;
+					}
+					else if (flag == 0)
+						place_ship_HORZ(board, a_ship);
 				}
 				else if (a_ship->orientation == 'v' || a_ship->orientation == 'V')
 				{
-					place_ship_VERT(board, a_ship, &flag);
+					flag = collision_chk_VERT(board, a_ship);
+					if (flag == 1)
+					{
+						printf("\tCOLLISION WARNING. Location unavailable. Pick a different coordinate.\n");
+						break;
+					}
+					else if (flag == 0)
+						place_ship_VERT(board, a_ship);
 				}
 				else
 				{
-					printf("\tINVALID orientation.\n");
+					printf("\tThat is an INVALID orientation.\n\tPlease reenter an acceptable orientation.\n");
 					a_ship->orientation = '\0';
 				}
 			}
@@ -69,146 +88,107 @@ int randomize_0thru9(void)
 
 void randomly_place_ship_on_board(char board[][10], struct ship* a_ship)
 {
-	int i, r, c, flag = 1, flip = -1;
+	int r = 0, c = 0, flag = 1, flip = -1;
+	a_ship->orientation = '\0';
 
 	// check for collision.
-	while (flag == 1 && flip == -1)
+	while (flag != 0)
 	{
 		r = randomize_0thru9();
 		c = randomize_0thru9();
-		flip = flipcoin();
+		a_ship->row = r;
+		a_ship->col = c;
+
 		flag = 0;		// lowers flag after each randomizing.
-
-		if (flip == 0)	// check for horizontal collision.
+		while (a_ship->orientation == '\0')
 		{
-			for (i = 0; i < a_ship->length; i++)
+			flip = flipcoin();
+			if (flip == 0)
 			{
-				// resets flags if there is a collision.
-				if (board[r][c + i] != '.' || a_ship->col > 11 - a_ship->length)		// 11 because inclusive
-				{
-					flip = -1;
+				flag = collision_chk_HORZ(board, a_ship);
+				if (flag == 1)
 					break;
+				else
+				{
+					a_ship->orientation = 'h';
+					place_ship_HORZ(board, a_ship);
 				}
 			}
-
-			// if all conditions are true (horizontal & no collision), place ship.
-			if (i == a_ship->length && flag == 0 && flip == 0)
+			else if (flip == 1)
 			{
-				a_ship->orientation = 'h';
-				for (i = 0; i < a_ship->length; i++)
+				flag = collision_chk_VERT(board, a_ship);
+				if (flag == 1)
+					break;
+				else
 				{
-					if (a_ship->col <= 11 - a_ship->length)
-					{
-						board[r][c] = a_ship->type;
-						c++;
-					}
+					a_ship->orientation = 'v';
+					place_ship_VERT(board, a_ship);
 				}
 			}
 		}
-
-		else if (flip == 1)	// check for vertical collision.
-		{
-			for (i = 0; i < a_ship->length; i++)
-			{
-				if (board[r + i][c] != '.' || a_ship->col > 11 - a_ship->length)
-				{
-					flip = -1;
-					break;
-				}
-			}
-
-			// if all conditions are true (vertical & no collision), place ship.
-			if (i == a_ship->length && flag == 0 && flip == 1)
-			{
-				a_ship->orientation = 'v';
-				for (i = 0; i < a_ship->length; i++)
-				{
-					if (a_ship->row <= 11 - a_ship->length)
-					{
-						board[r][c] = a_ship->type;
-						r++;
-					}
-				}
-			}
-		}
-
-		else
-			flag = 1;
 	}
-
 }
 
 
-char collision_chk_HORZ(char board[][10], struct ship* a_ship, int* flag)
+int collision_chk_HORZ(char board[][10], struct ship* a_ship)
 {
-	int i = 0, r = a_ship->row - 1, c = a_ship->col - 1;
+	int i = 0, r = a_ship->row, c = a_ship->col, check = 0;
+	int max_range = 10 - a_ship->length;
 
 	// check for collision.
 	for (i = 0; i < a_ship->length; i++)
 	{
-		if (board[r][c + i] != '.' /*|| a_ship->col > 11 - a_ship->length*/)		// 11 because inclusive
+		// inclusive: acceptable value of c must be <= (max_board_size - ship_length).
+		if (board[r][c + i] != '.' || c > max_range)
 		{
-			printf("\tCOLLISION WARNING. Location unavailable. Pick a different coordinate.\n");
-			*flag = 1;
-			return a_ship->orientation = '\0';
+			// raise flag if either condition is satisfied.
+			check = 1;
+			break;
 		}
 	}
-	return 'c';
+	return check;
 }
 
-char collision_chk_VERT(char board[][10], struct ship* a_ship, int* flag)
+int collision_chk_VERT(char board[][10], struct ship* a_ship)
 {
-	int i = 0, r = a_ship->row - 1, c = a_ship->col - 1;
+	int i = 0, r = a_ship->row, c = a_ship->col, check = 0;
+	int max_range = 10 - a_ship->length;
 
 	// check for collision.
 	for (i = 0; i < a_ship->length; i++)
 	{
-		if (board[r + i][c] != '.' /*|| a_ship->row > 11 - a_ship->length*/)		// 11 because inclusive
+		// inclusive: acceptable value of r must be <= (max_board_size - ship_length).
+		if (board[r + i][c] != '.' || r > max_range)
 		{
-			printf("\tCOLLISION WARNING. Location unavailable. Pick a different coordinate.\n");
-			*flag = 1;
-			return a_ship->orientation = '\0';
+			// raise flag if either condition is satisfied.
+			check = 1;
+			break;
 		}
 	}
-	return 'c';
+	return check;
 }
 
-char place_ship_HORZ(char board[][10], struct ship* a_ship, int* flag)
+void place_ship_HORZ(char board[][10], struct ship* a_ship)
 {
-	int i = 0, r = a_ship->row - 1, c = a_ship->col - 1;
+	int i = 0, r = a_ship->row, c = a_ship->col;
 
 	// if no collision, place ship.
-	if (*flag != 1)
+	for (i = 0; i < (a_ship->length); i++)
 	{
-		for (i = 0; i < a_ship->length; i++)
-		{
-			if (a_ship->col <= 11 - a_ship->length)		// 11 because inclusive
-			{
-				board[r][c] = a_ship->type;
-				c++;
-			}
-		}
+		board[r][c] = a_ship->type;
+		c++;
 	}
-	return a_ship->orientation;
 }
 
 
-char place_ship_VERT(char board[][10], struct ship* a_ship, int* flag)
+void place_ship_VERT(char board[][10], struct ship* a_ship)
 {
-	int i = 0, r = a_ship->row - 1, c = a_ship->col - 1;
+	int i = 0, r = a_ship->row, c = a_ship->col;
 
 	// if no collision, place ship.
-	if (*flag != 1)
+	for (i = 0; i < (a_ship->length); i++)
 	{
-		for (i = 0; i < (a_ship)->length; i++)
-		{
-			if (a_ship->row <= 11 - a_ship->length)		// 11 because inclusive
-			{
-
-				board[r][c] = a_ship->type;
-				r++;
-			}
-		}
+		board[r][c] = a_ship->type;
+		r++;
 	}
-	return a_ship->orientation;
 }

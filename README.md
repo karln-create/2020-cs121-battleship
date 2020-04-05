@@ -155,4 +155,41 @@
 	UPDATE 2020-04-04-SAT-1320: I have trimmed down the code, especially in gam.c.
 		I put all the repetitive function calls into a for loop to assign values to all the specific ship's parameters.
 
+		DEV NOTE: compartmentalizing as much as possible makes development work a lot more manageable.
 		TO-DO: Rework the collision check functions.
+
+	UPDATE 2020-04-04-SAT-1540: Fixed the problem with randomizing P2 board.
+		PROBLEM & SOLUTION DESCRIPTION:
+			It turns out to be an out of place if statement. In the function collision_chk() (either version), I place an else if statement
+			inside the for loop. Because the conditional statement has 2 clauses and if only either is false the program will skip to the else if.
+		
+			For example, function collision_chk_VERT() on line 152:
+				parameters: i = 0, r = 4, c = 4, check = 0;
+							max_range(any_ship) = (sizeof_either_dimension_of_the_board) - (ship_length)
+						
+				for (i = 0; i < a_ship->length; i++)
+					if:		((board[r + i][c] != '.') OR (r + i > max_range))
+							  ^~~~~~~~~~~~~~~~~~~~~~	  ^~~~~~~~~~~~~~~~~
+						 EITHER	 condition #1		  OR	 condition #2
+				
+					then:	 check = 1
+				
+					else:	 check = 0
+
+			This is a basic logic problem. Because of the OR, only one of the conditions needs to be true for the program to continue.
+			This is problematic because if a Carrier has already been placed previously in the same coordinate, the program will check for condition #2,
+			which is true because: (r = 4, c = 4) 
+									max_range(Battleship) = 10 - 4 = 6
+									(6 is the largest value allowed for r)
+		
+									(r = 4) <= (max_range = 6)
+		
+			Thefore, condition #2 is true. And because it is true, the program skip to to else and assign check = 0.
+			The function then returns 0 and causes a false check, which then allows it to overwrite the ship part previously placed there.
+
+			The solution is either moving the else outside th for-loop, or better yet, removing it completely. Removing completely is better because of
+			the implicit conditional statement when we declared and initialized the parameter check = 0.
+		
+			By the end of the for loop, if check == 0 then obviously no collsion is found.
+
+	UPDATE 2020-04-04-SAT-1815: TO-DO: start work on the core game (shooting and checking for hit or miss).

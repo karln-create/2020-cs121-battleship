@@ -19,8 +19,9 @@ void core_game();
 void pre_game(struct ship P1_Fleet[], struct ship P2_Fleet[],
 										char P1_board[][10], char P2_board[][10]);
 
-// Calculate statistics for each player.
+// Calculate statistics for all players.
 void post_game();
+
 //***************************************************************************************
 
 
@@ -29,3 +30,5 @@ void update_gameboard(char board[][10]);
 
 // DEBUGGER: UPDATE BOARD FOR P2. TO BE DELETED ONCE DONE.
 void update_gameboard_P2(char board[][10]);
+
+void print_board(char board[][10]);
