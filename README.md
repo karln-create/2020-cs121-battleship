@@ -60,7 +60,7 @@
 
 	(*) The statistics should be placed in a structure called 'STATS'. I will need 2 variables of type Stats, one for each player.
 		Once the game has ended, the the contents of each struct variable will be written in to the log file.
-------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 # PA6-Battlship | PROGRAM DEVELOPMENT HISTORY
 	
@@ -68,8 +68,8 @@
 		Set up all relevant initial declarations. The program will have the following files:
 
 		> header & main files: relevant declarations and main executable
-			main.c: this file contains 2 board-arrays (one for each player), the updated board at the end of each round is fed back to
-			board.c	for the next round of game. The function call is looped until the win flag is raised.
+			main.c: this file contains 2 board-arrays (one for each player), the updated board at the end of each round is fed back to board.c
+			for the next round of game. The function call is looped until the win flag is raised.
 			<--> board.c: contains function calls to update one board.
 						The updated board is then fed to main.c for printing out to the log file.
 				<-- board-functions.c: contains functions relevant to updating positions on one gameboard.
@@ -79,8 +79,8 @@
 		> log file: for a complete history of all moves made.
 
 		(*) Explaination of the arrows:
-			The arrows represent the scope of relationship between files. For example, board-functions.c will very likely only interact with
-			and feed data into boards.c.
+			The arrows represent the scope of relationship between files. For example, board-functions.c will very likely only interact with and
+			feed data into boards.c.
 		
 			On the other hand, both boards.c and statistics.c feed data into main so that such data can be written out into a log file.
 			They are on the same "rank" so there might be some interactions between the two.
@@ -159,37 +159,42 @@
 		TO-DO: Rework the collision check functions.
 
 	UPDATE 2020-04-04-SAT-1540: Fixed the problem with randomizing P2 board.
-		PROBLEM & SOLUTION DESCRIPTION:
-			It turns out to be an out of place if statement. In the function collision_chk() (either version), I place an else if statement
-			inside the for loop. Because the conditional statement has 2 clauses and if only either is false the program will skip to the else if.
+		PROBLEM & SOLUTION DESCRIPTION: It turns out to be an out-of-place if-statement.
+			In the function collision_chk() (either version), I placed an else-if statement inside the for-loop. The conditional statement
+			has 2 clauses connected by the 'OR'. This means only one condition needs to be verified for the program to skip to the else part.
 		
 			For example, function collision_chk_VERT() on line 152:
-				parameters: i = 0, r = 4, c = 4, check = 0;
-							max_range(any_ship) = (sizeof_either_dimension_of_the_board) - (ship_length)
-						
-				for (i = 0; i < a_ship->length; i++)
-					if:		((board[r + i][c] != '.') OR (r + i > max_range))
-							  ^~~~~~~~~~~~~~~~~~~~~~	  ^~~~~~~~~~~~~~~~~
-						 EITHER	 condition #1		  OR	 condition #2
+			-----------------------------------------------------------------------------------------------------------------------------------------
+				parameters: i = 0,
+							r = 4, c = 4,
+							check = 0,
+							max_r(any_ship) = (sizeof_either_dimension_of_the_board) - (ship_length)
 				
-					then:	 check = 1
+				function body:
+				for (from 0 to ship_length; i++)
+					if:			((board[r + i][c] != '.') OR (r > max_r))	// (r > max_r) == (r + i > max_sizeof_dimension)
+								  ^~~~~~~~~~~~~~~~~~~~~~	  ^~~~~~~~~
+						CHECK EITHER	condition #1	  OR	 condition #2
+						IF TRUE, THEN: check = 1
 				
-					else:	 check = 0
+					else:		 THEN: check = 0
+			-----------------------------------------------------------------------------------------------------------------------------------------
 
-			This is a basic logic problem. Because of the OR, only one of the conditions needs to be true for the program to continue.
-			This is problematic because if a Carrier has already been placed previously in the same coordinate, the program will check for condition #2,
-			which is true because: (r = 4, c = 4) 
-									max_range(Battleship) = 10 - 4 = 6
+			This is a basic logic problem. Because of the OR, only one of the conditions needs to be verified for the program to continue.
+			This is problematic. Suppose a Carrier has already been placed previously in the same coordinate. 
+			The program check condition #1, it is false but then the program will check for	condition #2, which then produces a valid
+			truth value because:	[r == 4][c] 
+									max_r(Battleship) = 10 - 4 = 6
 									(6 is the largest value allowed for r)
 		
-									(r = 4) <= (max_range = 6)
+									(r == 4) <= (max_r == 6)
 		
-			Thefore, condition #2 is true. And because it is true, the program skip to to else and assign check = 0.
-			The function then returns 0 and causes a false check, which then allows it to overwrite the ship part previously placed there.
+			Thefore, condition #2 is verified. And because it is verified, the program skips to the else part and assigns check = 0.
+			The function then returns 0 and produces a false flag, which then allows it to overwrite the ship letter previously placed at that
+			coordinate.
 
-			The solution is either moving the else outside th for-loop, or better yet, removing it completely. Removing completely is better because of
-			the implicit conditional statement when we declared and initialized the parameter check = 0.
-		
-			By the end of the for loop, if check == 0 then obviously no collsion is found.
+			The solution is either moving the else outside the for-loop, or better yet, removing it completely. Removing completely is better
+			because of the implicit conditional statement produced when we declared and initialized the parameter check = 0 at the very beginning.
+			By the end of the for-loop, if check == 0 then it is implicitly true that no collsion is found.
 
 	UPDATE 2020-04-04-SAT-1815: TO-DO: start work on the core game (shooting and checking for hit or miss).

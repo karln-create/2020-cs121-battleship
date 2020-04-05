@@ -7,7 +7,7 @@
 */
 #include "main.h"
 
-// PRE-PREGAME SETUP. -------------------------------------------------------------------
+// PRE-PREGAME SETUP. ******************************************************************
 // Initializies a player's board of size 10x10.
 void initialize_board(char board[][10]);
 
@@ -36,4 +36,9 @@ int collision_chk_VERT(char board[][10], struct ship* a_ship);
 void place_ship_HORZ(char board[][10], struct ship* a_ship);
 // Place the ship VERTICALLY.
 void place_ship_VERT(char board[][10], struct ship* a_ship);
+
+// TIE ALL FUNCTIONS TOGETHER FOR PREGAME SET UP ****************************************
+// Bring all functions together to set up the pregamne boards.
+void pre_game(struct ship P1_Fleet[], struct ship P2_Fleet[],
+	char P1_board[][10], char P2_board[][10]);
 

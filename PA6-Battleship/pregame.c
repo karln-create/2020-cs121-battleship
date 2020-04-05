@@ -1,4 +1,4 @@
-#include "pregame.h"
+#include "main.h"
 
 void initialize_board(char board[][10])
 {
@@ -26,8 +26,7 @@ void manually_place_ship_on_board(char board[][10], struct ship* a_ship)
 	while (flag != 0)
 	{
 		// Ask P1 to enter integer coordinates: (row = i, col = j).
-		printf("\tPlease select an available coordinate [row][col]: ");
-		scanf(" %d %d", &r, &c);
+		get_coordinate(&r, &c);
 		// Store coordinate in the ship's profile.
 		a_ship->row = r - 1;
 		a_ship->col = c - 1;
@@ -133,13 +132,13 @@ void randomly_place_ship_on_board(char board[][10], struct ship* a_ship)
 int collision_chk_HORZ(char board[][10], struct ship* a_ship)
 {
 	int i = 0, r = a_ship->row, c = a_ship->col, check = 0;
-	int max_range = 10 - a_ship->length;
+	int max_c = MAX_BOARD_DIM - (a_ship->length);
 
 	// check for collision.
 	for (i = 0; i < a_ship->length; i++)
 	{
-		// inclusive: acceptable value of c must be <= (max_board_size - ship_length).
-		if (board[r][c + i] != '.' || c > max_range)
+		// inclusive: acceptable value of c must be <= max_c.
+		if (board[r][c + i] != '.' || c > max_c)
 		{
 			// raise flag if either condition is satisfied.
 			check = 1;
@@ -152,13 +151,13 @@ int collision_chk_HORZ(char board[][10], struct ship* a_ship)
 int collision_chk_VERT(char board[][10], struct ship* a_ship)
 {
 	int i = 0, r = a_ship->row, c = a_ship->col, check = 0;
-	int max_range = 10 - a_ship->length;
+	int max_r = MAX_BOARD_DIM - (a_ship->length);
 
 	// check for collision.
 	for (i = 0; i < a_ship->length; i++)
 	{
-		// inclusive: acceptable value of r must be <= (max_board_size - ship_length).
-		if (board[r + i][c] != '.' || r > max_range)
+		// inclusive: acceptable value of r must be <= max_r.
+		if (board[r + i][c] != '.' || r > max_r)
 		{
 			// raise flag if either condition is satisfied.
 			check = 1;
@@ -191,4 +190,43 @@ void place_ship_VERT(char board[][10], struct ship* a_ship)
 		board[r][c] = a_ship->type;
 		r++;
 	}
+}
+
+void pre_game(struct ship P1_Fleet[], struct ship P2_Fleet[],
+	char P1_board[][10], char P2_board[][10])
+{
+	char ship_name[5][11] = { "Carrier",
+							  "Battleship",
+							  "Cruiser",
+							  "Submarine",
+							  "Destroyer" };
+
+	// Set display form for the gameboard arrays.
+	prep_board();
+
+	// Call function to print out the gameboard.
+	print_gameboard();
+
+	// Place ships for P1.
+	//for (int i = 0; i < 5; ++i)
+	//{
+	//	strcpy(P1_Fleet[i].alias, ship_name[i]);
+	//	printf("\n%s:\n", P1_Fleet[i].alias);
+	//	manually_place_ship_on_board(P1_board, &P1_Fleet[i]);
+	//	update_gameboard(P1_board);
+	//	print_gameboard();
+	//	//print_board(P1_board);
+	//}
+
+	// Place ships for P2.
+	for (int i = 0; i < 5; ++i)
+	{
+		*P2_Fleet[i].alias = *ship_name[i];
+		randomly_place_ship_on_board(P2_board, &P2_Fleet[i]);
+		update_gameboard_P2(P2_board);
+		print_gameboard();
+		//print_board(P2_board);
+	}
+
+	print_gameboard(/*g_label, g_gameboard*/);
 }

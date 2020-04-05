@@ -138,12 +138,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="postgame.c" />
     <ClCompile Include="pregame.c" />
     <ClCompile Include="game.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
+    <ClInclude Include="postgame.h" />
     <ClInclude Include="pregame.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

@@ -11,18 +11,28 @@ char g_label[1][22] = { 0 }, g_gameboard[10][21] = { 0 };
 
 int main(void)
 {
-	// sets the seed for the randomizer.
+	// Set the seed for the randomizer.
 	srand((unsigned int)time(NULL));
 
-	// sets preparatory values for the gameboard arrays.
-	prep_set_arrays(/*g_label, g_gameboard*/);
+	// ship type: type, orientation, length, row, col
+	Ship Carrier = { "", 'C', '\0', 5, 0, 0 };
+	Ship Battleship = { "", 'B', '\0', 4, 0, 0 };
+	Ship Cruiser = { "", 'R', '\0', 3, 0, 0 };
+	Ship Submarine = { "", 'S', '\0', 3, 0, 0 };
+	Ship Destroyer = { "", 'D', '\0', 2, 0, 0 };
 
-	// calls function to print out the gameboard.
-	print_gameboard(/*g_label, g_gameboard*/);
+	// In the beginning both players have the same fleet, unplaced and undamaged.
+	// Therefore, initialize both arrays as such.
+	Ship P1_Fleet[5] = { Carrier, Battleship, Cruiser, Submarine, Destroyer },
+		P2_Fleet[5] = { Carrier, Battleship, Cruiser, Submarine, Destroyer };
 
-	core_game();
+	// Declare and intialize one array board for each player.
+	char P1_board[10][10] = { 0 },
+		P2_board[10][10] = { 0 };
+	initialize_board(P1_board);
+	initialize_board(P2_board);
 
-	print_gameboard(/*g_label, g_gameboard*/);
+	core_game(P1_Fleet, P2_Fleet, P1_board, P2_board);
 
 	return 0;
 }

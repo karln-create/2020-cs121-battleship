@@ -7,10 +7,14 @@
 #include <string.h>
 #include "pregame.h"
 #include "game.h"
+#include "postgame.h"
 
 // **************************************************************************************
 
 // DECLARE GLOBAL PARAMETERS ------------------------------------------------------------
+
+// DEFINE a constant from the maximum dimension of the square board.
+#define MAX_BOARD_DIM 10
 
 // DEFINE global arrays for the displayed gameboard (seen by players).
 extern char g_label[1][22],
