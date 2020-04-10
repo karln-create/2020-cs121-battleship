@@ -64,6 +64,8 @@
 
 # PA6-Battlship | PROGRAM DEVELOPMENT HISTORY
 
+	UPDATE 2020-04-10-FRI-0928: Program completed.
+		
 	UPDATE 2020-04-10-FRI-0240: Finished 90% of the game.
 		TO-DO: Implement ship status: hit/missed/sunk
 				Implement logging player moves and statistics.
