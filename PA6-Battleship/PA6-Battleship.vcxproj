@@ -142,12 +142,14 @@
     <ClCompile Include="pregame.c" />
     <ClCompile Include="game.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="search_sort.c" />
+    <ClCompile Include="search_sort.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
     <ClInclude Include="postgame.h" />
     <ClInclude Include="pregame.h" />
-    <ClInclude Include="main.h" />
+    <ClInclude Include="root.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

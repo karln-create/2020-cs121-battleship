@@ -10,11 +10,11 @@
 
 	Both players' fleets consist of 5 ships that are hidden from the enemy. Each ship may be differentiated by its size
 	(besides the Cruiser and Submarine), or by number of cells its expands on the game board:
-			- Carrier			5 cells			c
-			- Battleship		4 cells			b
-			- Cruiser			3 cells			r
-			- Submarine			3 cells			s
-			- Destroyer			2 cells			d
+			- Carrier			5 cells			c/C
+			- Battleship		4 cells			b/B
+			- Cruiser			3 cells			r/R
+			- Submarine			3 cells			s/S
+			- Destroyer			2 cells			d/D
 		
 	(*)	The program should be built such that the user is Player1 (P1) and the computer is Player2 (P2).
 
@@ -63,6 +63,16 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------
 
 # PA6-Battlship | PROGRAM DEVELOPMENT HISTORY
+
+	UPDATE 2020-04-10-FRI-0240: Finished 90% of the game.
+		TO-DO: Implement ship status: hit/missed/sunk
+				Implement logging player moves and statistics.
+				NO NEED TO REDRAW THE WHOLE BOARD. (Took me a long time to realize!)
+
+	UPDATE 2020-04-09-THU-1645: Have done some additional research on sort & search algorithms.
+		
+		TO-DO:	Implement Merge-Sort on the list of letters denoted the ship types.
+				Implement Binary-Search on the sorted array to check for the ship type if it's a hit.
 
 	UPDATE 2020-04-05-SUN-1618: TO-DO: create arrays of letters for the types of battleship.
 		I can create an algorithm to check for the <char> value at that specific coordinate by comparing the ASCII code.
