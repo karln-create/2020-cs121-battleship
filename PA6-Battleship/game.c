@@ -42,13 +42,34 @@ void print_gameboard()
 	}
 }
 
-void fechof(FILE *stream, const char *format, ...)
-{
-	va_list args;
-	va_start(args, format);
-	vfprintf(stream, format, args);
-	va_end(args);
-}
+//void fechof_gameboard(FILE* outfile, int turn)
+//{
+//	fprintf(outfile, "\nTURN #%d:\tPLAYER 1:\t\t\tPLAYER2:\n", turn);
+//	int i = 0, j = 0;
+//	for (; i < 22; i++, j++)
+//	{
+//		fprintf(outfile, "%2d ", g_label[0][i]);
+//	}
+//	fprintf(outfile, "\n");
+//
+//	for (i = 0; i < 10; i++)
+//	{
+//		fprintf(outfile, "%2d", g_label[0][i + 1]);
+//		for (j = 0; j < 21; j++)
+//		{
+//			fprintf(outfile, " %2c", g_gameboard[i][j]);
+//		}
+//		fprintf(outfile, "\n");
+//	}
+//}
+//
+//void fechof(file *stream, const char *format, ...)
+//{
+//	va_list args;
+//	va_start(args, format);
+//	vfprintf(stream, format, args);
+//	va_end(args);
+//}
 
 void get_coordinate(int *row, int *col)
 {
@@ -82,19 +103,19 @@ void core_game(struct player *p1, struct player *p2,
 			++turn;
 			print_gameboard();
 			printf("THIS IS TURN #%d:\n", turn);
-			turn_MANUAL(P2_board, ship_letters, players_hitcheck);
+			turn_MANUAL(P2_board, ship_letters, players_hitcheck, &turn, outfile);
 			//turn_RANDOM(P2_board, ship_letters, players_hitcheck);
-			turn_RANDOM(P1_board, ship_letters, players_hitcheck);
+			turn_RANDOM(P1_board, ship_letters, players_hitcheck, & turn, outfile);
 			print_gameboard();
 		}
 		// Start RANDOM turn for P2.
 		else
 		{
 			++turn;
-			turn_RANDOM(P1_board, ship_letters, players_hitcheck);
+			turn_RANDOM(P1_board, ship_letters, players_hitcheck, &turn, outfile);
 			print_gameboard();
 			printf("THIS IS TURN #%d:\n", turn);
-			turn_MANUAL(P2_board, ship_letters, players_hitcheck);
+			turn_MANUAL(P2_board, ship_letters, players_hitcheck, &turn, outfile);
 			//turn_RANDOM(P2_board, ship_letters, players_hitcheck);
 			print_gameboard();
 		}
@@ -128,7 +149,7 @@ void core_game(struct player *p1, struct player *p2,
 	}
 }
 
-void turn_MANUAL(char player_board[][10], char ship_letters[], int players_hitcheck[][3])
+void turn_MANUAL(char player_board[][10], char ship_letters[], int players_hitcheck[][3], int* turn, FILE* outfile)
 {
 	int i, r, c, found = 0, key = 0;
 
@@ -175,10 +196,11 @@ void turn_MANUAL(char player_board[][10], char ship_letters[], int players_hitch
 		}
 	}
 
+	fprintf(outfile, "TURN #%2d, P1 [%2d][%2d]\n", *turn, r, c);
 	update_gameboard_P2(player_board);
 }
 
-void turn_RANDOM(char player_board[][10], char ship_letters[], int players_hitcheck[][3])
+void turn_RANDOM(char player_board[][10], char ship_letters[], int players_hitcheck[][3], int* turn, FILE* outfile)
 {
 	int i, r, c, key = 0, found = 0;
 
@@ -217,6 +239,7 @@ void turn_RANDOM(char player_board[][10], char ship_letters[], int players_hitch
 		}
 	}
 
+	fprintf(outfile, "TURN #%2d, P2 [%2d][%2d]\n", *turn, r + 1, c + 1);
 	update_gameboard(player_board);
 }
 
@@ -233,22 +256,15 @@ void update_gameboard(char board[][10])
 
 void update_gameboard_P2(char board[][10])
 {
-	for (int i = 0; i < 10; i++)
+	int i, j;
+	for (i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 10; j++)
+		for (j = 0; j < 10; j++)
 		{
-			g_gameboard[i][11 + j] = board[i][j];
+			if (board[i][j] == 'm' || board[i][j] == '*')
+				g_gameboard[i][11 + j] = board[i][j];
+			else
+				g_gameboard[i][11 + j] = '.';
 		}
-	}
-}
-
-void print_board(char board[][10])
-{
-	printf("\n");
-	for (int i = 0; i < 10; ++i)
-	{
-		for (int j = 0; j < 10; ++j)
-			printf(" %c ", board[i][j]);
-		printf("\n");
 	}
 }

@@ -14,7 +14,7 @@ void welcome_screen();
 int main(void)
 {
 	FILE* outfile = NULL;
-	outfile = fopen("battleship.log", "r");
+	outfile = fopen("battleship.log", "w");
 
 	// Set the seed for the randomizer.
 	srand((unsigned int)time(NULL));
@@ -42,32 +42,29 @@ int main(void)
 	char P1_board[10][10] = {0},
 		 P2_board[10][10] = {0};
 
-	int input = 0, flag = 1;
-	while (flag)
+	int input = 0, flag = 0;
+	while (flag == 0)
 	{
 		initialize_board(P1_board);
 		initialize_board(P2_board);
 		welcome_screen();
 		printf("\nEnter your choice: ");
 		scanf("%d", &input);
+		flag = 1;
 		if (input == 1)
 		{
 			core_game(&p1, &p2, P1_board, P2_board, outfile);
-			post_game(p1, p2);
+			post_game(&p1, &p2);
+			printf("\nReturn to main menu? ");
+			scanf(" %c", &(char)input);
+			if (input == 'y' || (char)input == 'Y')
+				flag = 0;
 		}
 		else
 			break;
 	}
 
-	fprintf(outfile, "PLAYER STATISTICS:\tPLAYER 1\t\t\tPLAYER 2");
-	fprintf(outfile, "\ttotal shots:\t%d\t\t\t%d", p1.shots, p2.shots);
-	fprintf(outfile, "\ttotal hits:\t%d\t\t\t%d", p1.hits, p2.hits);
-	fprintf(outfile, "\ttotal misses:\t%d\t\t\t%d", p1.misses, p2.misses);
-	fprintf(outfile, "\thits/misses:\t%lf%%\t\t\t%lf%%", p1.ratio, p2.ratio);
-	if (p1.status == 1)
-		fprintf(outfile, "\t\t\t\t%s\t\t\t%s", "WIN", "LOSS");
-	else
-		fprintf(outfile, "\t\t\t\t%s\t\t\t%s", "LOSS", "WIN");
+	fechof_postgame(&p1, &p2, outfile);
 
 	fclose(outfile);
 	return 0;
@@ -75,6 +72,7 @@ int main(void)
 
 void welcome_screen()
 {
+	system("cls");
 	printf("\n**************************************************************************************************************");
 	printf("\n\tBATTLESHIP");
 	printf("\n**************************************************************************************************************");
