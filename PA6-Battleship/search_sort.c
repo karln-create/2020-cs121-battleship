@@ -1,6 +1,5 @@
 #include "root.h"
 
-
 void sort_merge(char unsorted[], int left, int right)
 {
 	if (left >= right)

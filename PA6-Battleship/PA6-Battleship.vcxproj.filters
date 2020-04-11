@@ -27,11 +27,11 @@
     <ClCompile Include="postgame.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="search_sort.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="search_sort.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="search_sort.h">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
