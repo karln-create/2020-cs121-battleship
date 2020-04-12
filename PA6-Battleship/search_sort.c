@@ -44,4 +44,3 @@ void sort_merge(char unsorted[], int left, int right)
 
 	free(temp_arr);
 }
-

@@ -6,8 +6,7 @@
 #include "root.h"
 
 // declares and intializes global arrays for the displayed gameboard.
-char g_label[1][22] = {0}, g_gameboard[10][21] = {0};
-
+char g_label[1][22] = { 0 }, g_gameboard[10][21] = { 0 };
 
 void welcome_screen();
 
@@ -20,11 +19,11 @@ int main(void)
 	srand((unsigned int)time(NULL));
 
 	// ship type: type, orientation, length, row, col
-	Ship Carrier = {"", 'C', '\0', 5, 0, 0};
-	Ship Battleship = {"", 'B', '\0', 4, 0, 0};
-	Ship Cruiser = {"", 'R', '\0', 3, 0, 0};
-	Ship Submarine = {"", 'S', '\0', 3, 0, 0};
-	Ship Destroyer = {"", 'D', '\0', 2, 0, 0};
+	Ship Carrier    = { "", 'C', '\0', 5, 0, 0 };
+	Ship Battleship = { "", 'B', '\0', 4, 0, 0 };
+	Ship Cruiser    = { "", 'R', '\0', 3, 0, 0 };
+	Ship Submarine  = { "", 'S', '\0', 3, 0, 0 };
+	Ship Destroyer  = { "", 'D', '\0', 2, 0, 0 };
 
 	// In the beginning both players have the same fleet, unplaced and undamaged.
 	// Therefore, initialize both arrays as such.
@@ -39,8 +38,8 @@ int main(void)
 		p2.fleet[i] = Fleet[i];
 	}
 	// Declare and intialize one array board for each player.
-	char P1_board[10][10] = {0},
-		 P2_board[10][10] = {0};
+	char P1_board[10][10] = { 0 },
+		 P2_board[10][10] = { 0 };
 
 	int input = 0, flag = 0;
 	while (flag == 0)

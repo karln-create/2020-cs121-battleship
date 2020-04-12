@@ -71,14 +71,14 @@ void print_gameboard()
 //	va_end(args);
 //}
 
-void get_coordinate(int *row, int *col)
+void get_coordinate(int* row, int* col)
 {
 	printf("\tPlease select an available coordinate [row][col]: ");
 	scanf(" %d %d", row, col);
 }
 
-void core_game(struct player *p1, struct player *p2,
-			   char P1_board[][10], char P2_board[][10], FILE* outfile)
+void core_game(struct player* p1, struct player* p2,
+	char P1_board[][10], char P2_board[][10], FILE* outfile)
 {
 	char ship_letters[] = { 'c', 'C', 'b', 'B', 'r', 'R', 's', 'S', 'd', 'D' };
 	sort_merge(ship_letters, 0, (sizeof(ship_letters) / (sizeof(*ship_letters))) - 1);
@@ -105,7 +105,7 @@ void core_game(struct player *p1, struct player *p2,
 			printf("THIS IS TURN #%d:\n", turn);
 			turn_MANUAL(P2_board, ship_letters, players_hitcheck, &turn, outfile);
 			//turn_RANDOM(P2_board, ship_letters, players_hitcheck);
-			turn_RANDOM(P1_board, ship_letters, players_hitcheck, & turn, outfile);
+			turn_RANDOM(P1_board, ship_letters, players_hitcheck, &turn, outfile);
 			print_gameboard();
 		}
 		// Start RANDOM turn for P2.
@@ -125,11 +125,11 @@ void core_game(struct player *p1, struct player *p2,
 			winflag = 1;
 			printf("\n\tPLAYER 1 WON!\n\n");
 			p1->misses = players_hitcheck[0][0];
-			p1->hits = players_hitcheck[0][1];
-			p1->shots = players_hitcheck[0][2];
+			p1->hits   = players_hitcheck[0][1];
+			p1->shots  = players_hitcheck[0][2];
 			p2->misses = players_hitcheck[1][0];
-			p2->hits = players_hitcheck[1][1];
-			p2->shots = players_hitcheck[1][2];
+			p2->hits   = players_hitcheck[1][1];
+			p2->shots  = players_hitcheck[1][2];
 			p1->status = 1;
 			p2->status = 0;
 		}
@@ -138,11 +138,11 @@ void core_game(struct player *p1, struct player *p2,
 			winflag = 1;
 			printf("\n\tPLAYER 2 WON!\n\n");
 			p1->misses = players_hitcheck[0][0];
-			p1->hits = players_hitcheck[0][1];
-			p1->shots = players_hitcheck[0][2];
+			p1->hits   = players_hitcheck[0][1];
+			p1->shots  = players_hitcheck[0][2];
 			p2->misses = players_hitcheck[1][0];
-			p2->hits = players_hitcheck[1][1];
-			p2->shots = players_hitcheck[1][2];
+			p2->hits   = players_hitcheck[1][1];
+			p2->shots  = players_hitcheck[1][2];
 			p2->status = 1;
 			p1->status = 0;
 		}

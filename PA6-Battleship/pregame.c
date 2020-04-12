@@ -16,7 +16,7 @@ int flipcoin(void)
 	return rand() % 2;
 }
 
-void manually_place_ship_on_board(char board[][10], struct ship *a_ship)
+void manually_place_ship_on_board(char board[][10], struct ship* a_ship)
 {
 	int i = 0, r = -1, c = -1, flag = -1;
 	a_ship->orientation = '\0';
@@ -81,7 +81,7 @@ int randomize_0thru9(void)
 	return rand() % 9;
 }
 
-void randomly_place_ship_on_board(char board[][10], struct ship *a_ship)
+void randomly_place_ship_on_board(char board[][10], struct ship* a_ship)
 {
 	int r, c, flag = 1, flip = -1;
 	a_ship->orientation = '\0';
@@ -124,7 +124,7 @@ void randomly_place_ship_on_board(char board[][10], struct ship *a_ship)
 	}
 }
 
-int collision_chk_HORZ(char board[][10], struct ship *a_ship)
+int collision_chk_HORZ(char board[][10], struct ship* a_ship)
 {
 	int i = 0, r = a_ship->row, c = a_ship->col, check = 0;
 	int max_c = MAX_BOARD_DIM - (a_ship->length);
@@ -143,7 +143,7 @@ int collision_chk_HORZ(char board[][10], struct ship *a_ship)
 	return check;
 }
 
-int collision_chk_VERT(char board[][10], struct ship *a_ship)
+int collision_chk_VERT(char board[][10], struct ship* a_ship)
 {
 	int i = 0, r = a_ship->row, c = a_ship->col, check = 0;
 	int max_r = MAX_BOARD_DIM - (a_ship->length);
@@ -162,7 +162,7 @@ int collision_chk_VERT(char board[][10], struct ship *a_ship)
 	return check;
 }
 
-void place_ship_HORZ(char board[][10], struct ship *a_ship)
+void place_ship_HORZ(char board[][10], struct ship* a_ship)
 {
 	int i = 0, r = a_ship->row, c = a_ship->col;
 
@@ -174,7 +174,7 @@ void place_ship_HORZ(char board[][10], struct ship *a_ship)
 	}
 }
 
-void place_ship_VERT(char board[][10], struct ship *a_ship)
+void place_ship_VERT(char board[][10], struct ship* a_ship)
 {
 	int i = 0, r = a_ship->row, c = a_ship->col;
 
@@ -187,13 +187,13 @@ void place_ship_VERT(char board[][10], struct ship *a_ship)
 }
 
 void pre_game(struct ship P1_Fleet[], struct ship P2_Fleet[],
-			  char P1_board[][10], char P2_board[][10])
+	char P1_board[][10], char P2_board[][10])
 {
-	char ship_name[5][11] = {"Carrier",
+	char ship_name[5][11] = { "Carrier",
 							 "Battleship",
 							 "Cruiser",
 							 "Submarine",
-							 "Destroyer"};
+							 "Destroyer" };
 
 	// Set display form for the gameboard arrays.
 	prep_board();
@@ -201,7 +201,7 @@ void pre_game(struct ship P1_Fleet[], struct ship P2_Fleet[],
 	// Call function to print out the gameboard.
 	print_gameboard();
 
-	 //Place ships for P1.
+	//Place ships for P1.
 	for (int i = 0; i < 5; ++i)
 	{
 		strcpy(P1_Fleet[i].alias, ship_name[i]);

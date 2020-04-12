@@ -20,7 +20,7 @@
 #define MAX_SHIP_TABLE 10
 // DEFINE global arrays for the displayed gameboard (seen by players).
 extern char g_label[1][22],
-			g_gameboard[10][21];
+g_gameboard[10][21];
 
 // DEFINE the structure ship{} with some inherent characteristics.
 typedef struct ship {
